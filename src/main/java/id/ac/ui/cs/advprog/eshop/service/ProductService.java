@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ProductService {
-    public Product create(Product product);
-    public Product edit(UUID productId, Product product);
-    public List<Product> findAll();
-    public Product findOne(UUID productId);
+    Product create(Product product);
+    Product edit(UUID productId, Product product);
+    List<Product> findAll();
+    Product findOne(UUID productId);
 }

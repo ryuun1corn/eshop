@@ -25,7 +25,7 @@ public class ProductController {
 
     @PostMapping("/create")
     public String createProductPost(@ModelAttribute Product product, Model model) {
-        service.create(product);
+        System.out.println(product.getProductId());
         return "redirect:list";
     }
 
@@ -43,7 +43,7 @@ public class ProductController {
         return "EditProduct";
     }
 
-    @PostMapping("/edit/{productId}")
+    @PatchMapping("/edit/{productId}")
     public String editProductPatch(@PathVariable UUID productId, @ModelAttribute Product editedProduct, Model model) {
         service.edit(productId, editedProduct);
         return "redirect:/product/list";

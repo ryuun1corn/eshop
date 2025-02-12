@@ -134,6 +134,28 @@ public class ProductRepositoryTest {
 
     @Test
     void testDeleteAndFind() {
+        Product newProduct = new Product();
+        newProduct.setProductName("Sampo Cap Bambang");
+        newProduct.setProductQuantity(100);
+        productRepository.create(newProduct);
 
+        productRepository.delete(newProduct.getProductId());
+
+        Iterator<Product> allProducts = productRepository.findAll();
+        assertFalse(allProducts.hasNext());
+    }
+
+    @Test
+    void testDeleteNotFound() {
+        Product newProduct = new Product();
+        newProduct.setProductName("Sampo Cap Bambang");
+        newProduct.setProductQuantity(100);
+        newProduct.setProductId(UUID.fromString("eb558e9f-1c39-460e-8860-71af6af63bd6"));
+        productRepository.create(newProduct);
+
+        productRepository.delete(UUID.fromString("a0f9de46-90b1-437d-a0bf-d0821dde9096"));
+
+        Iterator<Product> allProducts = productRepository.findAll();
+        assertTrue(allProducts.hasNext());
     }
 }

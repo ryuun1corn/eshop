@@ -18,18 +18,17 @@ public class ProductRepository {
     }
 
     public Product edit(UUID productId, Product updatedProduct) {
-        for (Product existingProduct : productData)  {
-            if (existingProduct.getProductId().equals(productId)) {
-                if (updatedProduct.getProductName() != null) {
-                    existingProduct.setProductName(updatedProduct.getProductName());
-                }
-
-                if (updatedProduct.getProductQuantity() != 0) {
-                    existingProduct.setProductQuantity(updatedProduct.getProductQuantity());
-                }
-
-                return existingProduct;
+        Product foundProduct = findOne(productId);
+        if (foundProduct != null) {
+            if (updatedProduct.getProductName() != null) {
+                foundProduct.setProductName(updatedProduct.getProductName());
             }
+
+            if (updatedProduct.getProductQuantity() != 0) {
+                foundProduct.setProductQuantity(updatedProduct.getProductQuantity());
+            }
+
+            return foundProduct;
         }
 
         return null;

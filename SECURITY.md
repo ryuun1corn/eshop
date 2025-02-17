@@ -5,7 +5,6 @@
 We take security vulnerabilities seriously and appreciate your efforts to responsibly disclose any issues you find.
 
 - **Email**: Please report vulnerabilities via email to **yuda.arif.prasojo@gmail.com**.
-- **Secure Reporting**: If your report contains sensitive information, please use our PGP key [here](https://example.com/pgp-key) for encrypted communication.
 
 ## What Constitutes a Vulnerability?
 

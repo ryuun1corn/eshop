@@ -22,7 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 public class ProductControllerTest {
-    private AutoCloseable closeable;
     private MockMvc mockMvc;
 
     @Mock
@@ -33,14 +32,9 @@ public class ProductControllerTest {
 
     @BeforeEach
     void setUp() {
-        closeable = MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
     }
 
-    @AfterEach
-    void tearDown() throws Exception {
-        closeable.close();
-    }
 
     @Test
     void createProductPage_ShouldReturnCreateProductView() throws Exception {

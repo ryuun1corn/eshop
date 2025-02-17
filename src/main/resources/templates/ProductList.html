@@ -47,7 +47,7 @@
                 "Content-Type": "application/json"
             }
         }).then(response => {
-            if (response.redirected) {
+            if (response.ok) {
                 window.location.href = response.url;
             }
         });

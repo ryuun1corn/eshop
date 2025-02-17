@@ -3,6 +3,9 @@ package id.ac.ui.cs.advprog.eshop.controller;
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,14 +47,18 @@ public class ProductController {
     }
 
     @PatchMapping("/edit/{productId}")
-    public String editProductPatch(@PathVariable UUID productId, @ModelAttribute Product editedProduct, Model model) {
+    public ResponseEntity<Void> editProductPatch(@PathVariable UUID productId, @ModelAttribute Product editedProduct, Model model) {
         service.edit(productId, editedProduct);
-        return "redirect:/product/list";
+        return ResponseEntity.status(HttpStatus.SEE_OTHER)
+                .header(HttpHeaders.LOCATION, "/product/list")
+                .build();
     }
 
     @DeleteMapping("/delete/{productId}")
-    public String deleteProductPath(@PathVariable UUID productId, Model model) {
+    public ResponseEntity<Void> deleteProductPath(@PathVariable UUID productId, Model model) {
         service.delete(productId);
-        return "redirect:/product/list";
+        return ResponseEntity.status(HttpStatus.SEE_OTHER)
+                .header(HttpHeaders.LOCATION, "/product/list")
+                .build();
     }
 }

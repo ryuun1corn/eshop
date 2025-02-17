@@ -35,7 +35,7 @@
             method: "PATCH",  // Force PATCH request
             body: formData
         }).then(response => {
-            if (response.redirected) {
+            if (response.ok) {
                 window.location.href = response.url;
             }
         });

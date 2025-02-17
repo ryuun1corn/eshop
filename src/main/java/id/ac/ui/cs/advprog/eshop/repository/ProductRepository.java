@@ -37,7 +37,9 @@ public class ProductRepository {
     public boolean delete(UUID productId) {
         Product foundProduct = findOne(productId);
 
-        if (foundProduct == null) return false;
+        if (foundProduct == null) {
+            return false;
+        }
 
         return productData.remove(foundProduct);
     }

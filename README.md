@@ -8,7 +8,7 @@ Yudayana Arif Prasojo (2306215160)
 [![Dependabot Updates](https://github.com/ryuun1corn/eshop/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/ryuun1corn/eshop/actions/workflows/dependabot/dependabot-updates)
 
 ### Project URL
-[Access the website here!](https://confused-rosalia-adpro-ryuun1corn-3ce73902.koyeb.app/)
+<a href="https://confused-rosalia-adpro-ryuun1corn-3ce73902.koyeb.app/" target="_blank">Access the website here!</a>
 
 ## Table of Contents
 1. [Introduction](#Eshop)

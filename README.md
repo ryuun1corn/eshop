@@ -14,10 +14,10 @@ Yudayana Arif Prasojo (2306215160)
 1. [Introduction](#Eshop)
 2. [Project URL](#project-url)
 3. [Week 01 Reflections](#week-01-reflections)
-    - 4.1 [Reflection 1: Code Quality and Clean Code Principles](#reflection-1-code-quality-and-clean-code-principles)
-    - 4.2 [Reflection 2: Unit Testing and Code Coverage](#reflection-2-unit-testing-and-code-coverage)
+    - 3.1 [Reflection 1: Code Quality and Clean Code Principles](#reflection-1-code-quality-and-clean-code-principles)
+    - 3.2 [Reflection 2: Unit Testing and Code Coverage](#reflection-2-unit-testing-and-code-coverage)
 4. [Week 02 Reflections](#week-02-reflections)
-    - 5.1 [Reflection: CI/CD and Code Quality Issues](#reflection-cicd-and-code-quality-issues)
+    - 4.1 [Reflection: CI/CD and Code Quality Issues](#reflection-cicd-and-code-quality-issues)
 
 
 ## Week 02 Reflections

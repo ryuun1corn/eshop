@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @Repository
 public class CarRepository {
-    static int id = 0;
     private List<Car> carData = new ArrayList<>();
 
     public Car create(Car car) {
@@ -35,7 +34,7 @@ public class CarRepository {
         return null;
     }
 
-    public Car update(String id, Car updatedCar) {
+    public Car edit(String id, Car updatedCar) {
         for (Car car : carData) {
             if (car.getCarId().equals(id)) {
                 // Update the existing car with the current information

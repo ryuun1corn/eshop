@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 public class ProductRepositoryTest {
     @InjectMocks
-    ProductRepository productRepository;
+    ProductRepositoryImpl productRepository;
 
     @BeforeEach
     void setUp() {

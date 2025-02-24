@@ -75,16 +75,16 @@ public class ProductRepositoryTest {
     @Test
     void testFindOneByIdIfMoreThanOneProduct() {
         Product product1 = new Product();
-        product1.setProductId(UUID.fromString("eb558e9f-1c39-460e-8860-71af6af63bd6"));
         product1.setProductName("Sampo Cap Bambang");
         product1.setProductQuantity(100);
-        productRepository.create(product1);
+        product1 = productRepository.create(product1);
+        product1.setProductId(UUID.fromString("eb558e9f-1c39-460e-8860-71af6af63bd6"));
 
         Product product2 = new Product();
-        product2.setProductId(UUID.fromString("a0f9de46-90b1-437d-a0bf-d0821dde9096"));
         product2.setProductName("Sampo Cap Usep");
         product2.setProductQuantity(50);
-        productRepository.create(product2);
+        product2 = productRepository.create(product2);
+        product2.setProductId(UUID.fromString("a0f9de46-90b1-437d-a0bf-d0821dde9096"));
 
         Product foundProduct1 = productRepository.findOne(UUID.fromString("eb558e9f-1c39-460e-8860-71af6af63bd6"));
         Product foundProduct2 = productRepository.findOne(UUID.fromString("a0f9de46-90b1-437d-a0bf-d0821dde9096"));

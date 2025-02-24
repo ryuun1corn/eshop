@@ -7,7 +7,7 @@ import java.util.List;
 public interface CarService {
     Car create(Car car);
     List<Car> findAll();
-    Car findById(String carId);
-    void edit(String carId, Car car);
-    void deleteCarById(String carId);
+    Car findOne(String carId);
+    Car edit(String carId, Car car);
+    boolean delete(String carId);
 }

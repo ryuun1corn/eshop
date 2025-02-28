@@ -9,15 +9,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class CarRepository {
-    static int id = 0;
+public class CarRepositoryImpl implements BaseModelRepository<Car> {
     private List<Car> carData = new ArrayList<>();
 
     public Car create(Car car) {
-        if (car.getCarId() == null) {
-            UUID uuid = UUID.randomUUID();
-            car.setCarId(uuid.toString());
-        }
+        UUID uuid = UUID.randomUUID();
+        car.setId(uuid);
         carData.add(car);
         return car;
     }
@@ -26,29 +23,29 @@ public class CarRepository {
         return carData.iterator();
     }
 
-    public Car findById(String id) {
+    public Car findOne(UUID id) {
         for (Car car : carData) {
-            if (car.getCarId().equals(id)) {
+            if (car.getId().equals(id)) {
                 return car;
             }
         }
         return null;
     }
 
-    public Car update(String id, Car updatedCar) {
+    public Car edit(UUID id, Car updatedCar) {
         for (Car car : carData) {
-            if (car.getCarId().equals(id)) {
+            if (car.getId().equals(id)) {
                 // Update the existing car with the current information
-                car.setCarName(updatedCar.getCarName());
-                car.setCarColor(updatedCar.getCarColor());
-                car.setCarQuantity(updatedCar.getCarQuantity());
+                car.setName(updatedCar.getName());
+                car.setColor(updatedCar.getColor());
+                car.setQuantity(updatedCar.getQuantity());
                 return car;
             }
         }
         return null;
     }
 
-    public void delete(String id) {
-        carData.removeIf(car -> car.getCarId().equals(id));
+    public boolean delete(UUID id) {
+        return carData.removeIf(car -> car.getId().equals(id));
     }
 }

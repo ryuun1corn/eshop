@@ -1,6 +1,5 @@
 package id.ac.ui.cs.advprog.eshop.controller;
 
-import id.ac.ui.cs.advprog.eshop.model.Car;
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.service.BaseModelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,53 +60,5 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.SEE_OTHER)
                 .header(HttpHeaders.LOCATION, "/product/list")
                 .build();
-    }
-}
-
-@Controller
-@RequestMapping("/car")
-class CarController extends ProductController {
-    @Autowired
-    private BaseModelService<Car> carservice;
-
-    @GetMapping("/createCar")
-    public String createCarPage(Model model) {
-        Car car = new Car();
-        model.addAttribute("car", car);
-        return "CreateCar";
-    }
-
-    @PostMapping("/createCar")
-    public String createCarPost(@ModelAttribute Car car, Model model) {
-        carservice.create(car);
-        return "redirect:listCar";
-    }
-
-    @GetMapping("/listCar")
-    public String carListPage(Model model) {
-        List<Car> allCars = carservice.findAll();
-        model.addAttribute("cars", allCars);
-        return "CarList";
-    }
-
-    @GetMapping("/editCar/{carId}")
-    public String editCarPage(@PathVariable UUID carId, Model model) {
-        Car car = carservice.findOne(carId);
-        model.addAttribute("car", car);
-        return "EditCar";
-    }
-
-    @PostMapping("/editCar")
-    public String editCarPost(@ModelAttribute Car car, Model model) {
-        System.out.println(car.getCarId());
-        carservice.edit(car.getCarId(), car);
-
-        return "redirect:listCar";
-    }
-
-    @PostMapping("/deleteCar")
-    public String deleteCar(@RequestParam("carId") UUID carId) {
-        carservice.delete(carId);
-        return "redirect:listCar";
     }
 }

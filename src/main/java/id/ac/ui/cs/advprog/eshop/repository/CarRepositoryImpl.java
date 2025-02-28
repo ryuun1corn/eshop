@@ -14,7 +14,7 @@ public class CarRepositoryImpl implements BaseModelRepository<Car> {
 
     public Car create(Car car) {
         UUID uuid = UUID.randomUUID();
-        car.setCarId(uuid);
+        car.setId(uuid);
         carData.add(car);
         return car;
     }
@@ -25,7 +25,7 @@ public class CarRepositoryImpl implements BaseModelRepository<Car> {
 
     public Car findOne(UUID id) {
         for (Car car : carData) {
-            if (car.getCarId().equals(id)) {
+            if (car.getId().equals(id)) {
                 return car;
             }
         }
@@ -34,11 +34,11 @@ public class CarRepositoryImpl implements BaseModelRepository<Car> {
 
     public Car edit(UUID id, Car updatedCar) {
         for (Car car : carData) {
-            if (car.getCarId().equals(id)) {
+            if (car.getId().equals(id)) {
                 // Update the existing car with the current information
-                car.setCarName(updatedCar.getCarName());
-                car.setCarColor(updatedCar.getCarColor());
-                car.setCarQuantity(updatedCar.getCarQuantity());
+                car.setName(updatedCar.getName());
+                car.setColor(updatedCar.getColor());
+                car.setQuantity(updatedCar.getQuantity());
                 return car;
             }
         }
@@ -46,6 +46,6 @@ public class CarRepositoryImpl implements BaseModelRepository<Car> {
     }
 
     public boolean delete(UUID id) {
-        return carData.removeIf(car -> car.getCarId().equals(id));
+        return carData.removeIf(car -> car.getId().equals(id));
     }
 }

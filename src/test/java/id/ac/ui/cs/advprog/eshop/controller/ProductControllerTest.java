@@ -67,7 +67,7 @@ public class ProductControllerTest {
     void editProductPage_ShouldReturnEditProductView() throws Exception {
         Product mockProduct = new Product();
         UUID productId = UUID.randomUUID();
-        mockProduct.setProductId(productId);
+        mockProduct.setId(productId);
         when(productService.findOne(productId)).thenReturn(mockProduct);
 
         mockMvc.perform(get("/product/edit/" + productId))
@@ -80,7 +80,7 @@ public class ProductControllerTest {
     void editProductPatch_ShouldRedirectToList() throws Exception {
         Product mockProduct = new Product();
         UUID productId = UUID.randomUUID();
-        mockProduct.setProductId(productId);
+        mockProduct.setId(productId);
         when(productService.edit(eq(productId), any(Product.class))).thenReturn(mockProduct);
 
         mockMvc.perform(patch("/product/edit/" + productId)

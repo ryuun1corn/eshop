@@ -13,7 +13,7 @@ public class ProductRepositoryImpl implements BaseModelRepository<Product> {
     private List<Product> productData = new ArrayList<>();
 
     public Product create(Product product) {
-        product.setProductId(UUID.randomUUID());
+        product.setId(UUID.randomUUID());
         productData.add(product);
         return product;
     }
@@ -21,12 +21,12 @@ public class ProductRepositoryImpl implements BaseModelRepository<Product> {
     public Product edit(UUID productId, Product updatedProduct) {
         Product foundProduct = findOne(productId);
         if (foundProduct != null) {
-            if (updatedProduct.getProductName() != null) {
-                foundProduct.setProductName(updatedProduct.getProductName());
+            if (updatedProduct.getName() != null) {
+                foundProduct.setName(updatedProduct.getName());
             }
 
-            if (updatedProduct.getProductQuantity() != 0) {
-                foundProduct.setProductQuantity(updatedProduct.getProductQuantity());
+            if (updatedProduct.getQuantity() != 0) {
+                foundProduct.setQuantity(updatedProduct.getQuantity());
             }
 
             return foundProduct;
@@ -51,7 +51,7 @@ public class ProductRepositoryImpl implements BaseModelRepository<Product> {
 
     public Product findOne(UUID productId) {
         for (Product existingProduct : productData)  {
-            if (existingProduct.getProductId().equals(productId)) {
+            if (existingProduct.getId().equals(productId)) {
                 return existingProduct;
             }
         }

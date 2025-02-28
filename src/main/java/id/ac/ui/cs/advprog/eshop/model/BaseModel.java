@@ -7,6 +7,8 @@ import java.util.UUID;
 
 @Getter @Setter
 public abstract class BaseModel {
+    private BaseModel() {}
+
     private UUID id;
     private String name;
     private int quantity;

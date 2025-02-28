@@ -7,7 +7,9 @@ import java.util.UUID;
 
 @Getter @Setter
 public abstract class BaseModel {
-    protected BaseModel() {}
+    protected BaseModel() {
+        // This constructor is intentionally empty.
+    }
 
     private UUID id;
     private String name;

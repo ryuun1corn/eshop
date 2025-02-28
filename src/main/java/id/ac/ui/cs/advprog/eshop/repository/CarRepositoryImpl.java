@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class CarRepositoryImpl implements CarRepository{
+public class CarRepositoryImpl implements BaseModelRepository<Car> {
     private List<Car> carData = new ArrayList<>();
 
     public Car create(Car car) {
         UUID uuid = UUID.randomUUID();
-        car.setCarId(uuid.toString());
+        car.setCarId(uuid);
         carData.add(car);
         return car;
     }
@@ -23,7 +23,7 @@ public class CarRepositoryImpl implements CarRepository{
         return carData.iterator();
     }
 
-    public Car findOne(String id) {
+    public Car findOne(UUID id) {
         for (Car car : carData) {
             if (car.getCarId().equals(id)) {
                 return car;
@@ -32,7 +32,7 @@ public class CarRepositoryImpl implements CarRepository{
         return null;
     }
 
-    public Car edit(String id, Car updatedCar) {
+    public Car edit(UUID id, Car updatedCar) {
         for (Car car : carData) {
             if (car.getCarId().equals(id)) {
                 // Update the existing car with the current information
@@ -45,7 +45,7 @@ public class CarRepositoryImpl implements CarRepository{
         return null;
     }
 
-    public boolean delete(String id) {
+    public boolean delete(UUID id) {
         return carData.removeIf(car -> car.getCarId().equals(id));
     }
 }

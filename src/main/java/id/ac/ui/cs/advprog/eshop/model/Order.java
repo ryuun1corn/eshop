@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import enums.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,7 @@ public class Order {
         this.id = id;
         this.orderTime = orderTime;
         this.author = author;
-        this.status = "WAITING_PAYMENT";
+        this.status = OrderStatus.WAITING_PAYMENT.getValue();
 
         if (products.isEmpty()) {
             throw new IllegalArgumentException("Order must have at least one product");
@@ -32,22 +33,14 @@ public class Order {
 
     public Order(UUID id, List<Product> products, Long orderTime, String author, String status) {
         this(id, products, orderTime, author);
-
-        String[] statusList = {"WAITING_PAYMENT", "FAILED", "SUCCESS", "CANCELLED"};
-        if (Arrays.stream(statusList).noneMatch(item -> (item.equals(status)))) {
-            throw new IllegalArgumentException("Invalid status");
-        } else {
-            this.status = status;
-        }
+        this.setStatus(status);
     }
 
     public void setStatus(String status) {
-        String[] statusList = {"WAITING_PAYMENT", "FAILED", "SUCCESS", "CANCELLED"};
-
-        if (Arrays.stream(statusList).noneMatch(item -> (item.equals(status)))) {
-            throw new IllegalArgumentException("Invalid status");
-        } else {
+        if (OrderStatus.contains(status)) {
             this.status = status;
+        } else {
+            throw new IllegalArgumentException("Invalid order status");
         }
     }
 }

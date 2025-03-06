@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import enums.OrderStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -50,14 +51,14 @@ public class OrderTest {
         assertEquals("13652556-012a-4c07-b546-54eb1396d79b", order.getId().toString());
         assertEquals(1708560000L, order.getOrderTime());
         assertEquals("Safira Sudrajat", order.getAuthor());
-        assertEquals("WAITING_PAYMENT", order.getStatus());
+        assertEquals(OrderStatus.WAITING_PAYMENT.getValue(), order.getStatus());
     }
 
     @Test
     void testCreateOrderSuccessStatus() {
         Order order = new Order(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"),
-                this.products, 1708560000L, "Safira Sudrajat", "SUCCESS");
-        assertEquals("SUCCESS", order.getStatus());
+                this.products, 1708560000L, "Safira Sudrajat", OrderStatus.SUCCESS.getValue());
+        assertEquals(OrderStatus.SUCCESS.getValue(), order.getStatus());
     }
 
     @Test
@@ -71,16 +72,16 @@ public class OrderTest {
     @Test
     void testSetStatusToCancelled() {
         Order order = new Order(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"),
-                this.products, 1708560000L, "Safira Sudrajat", "SUCCESS");
-        order.setStatus("CANCELLED");
+                this.products, 1708560000L, "Safira Sudrajat", OrderStatus.SUCCESS.getValue());
+        order.setStatus(OrderStatus.CANCELLED.getValue());
 
-        assertEquals("CANCELLED", order.getStatus());
+        assertEquals(OrderStatus.CANCELLED.getValue(), order.getStatus());
     }
 
     @Test
     void testSetStatusToInvalidStatus() {
         Order order = new Order(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"),
-                this.products, 1708560000L, "Safira Sudrajat", "SUCCESS");
+                this.products, 1708560000L, "Safira Sudrajat", OrderStatus.SUCCESS.getValue());
 
         assertThrows(IllegalArgumentException.class, () -> {
             order.setStatus("MEOW");

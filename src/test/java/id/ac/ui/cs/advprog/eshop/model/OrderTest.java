@@ -32,14 +32,14 @@ public class OrderTest {
         this.products.clear();
 
         assertThrows(IllegalArgumentException.class, () -> {
-            Order order = new Order("13652556-012a-4c07-b546-54eb1396d79b",
+            Order order = new Order(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"),
                     this.products, 1708560000L, "Safira Sudrajat");
         });
     }
 
     @Test
     void testCreateOrderDefaultStatus() {
-        Order order = new Order("13652556-012a-4c07-b546-54eb1396d79b",
+        Order order = new Order(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"),
                 this.products, 1708560000L, "Safira Sudrajat");
 
         assertSame(this.products, order.getProducts());
@@ -55,7 +55,7 @@ public class OrderTest {
 
     @Test
     void testCreateOrderSuccessStatus() {
-        Order order = new Order("13652556-012a-4c07-b546-54eb1396d79b",
+        Order order = new Order(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"),
                 this.products, 1708560000L, "Safira Sudrajat", "SUCCESS");
         assertEquals("SUCCESS", order.getStatus());
     }
@@ -63,14 +63,14 @@ public class OrderTest {
     @Test
     void testCreateOrderInvalidStatus() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Order order = new Order("13652556-012a-4c07-b546-54eb1396d79b",
+            Order order = new Order(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"),
                     this.products, 1708560000L, "Safira Sudrajat", "MEOW");
         });
     }
 
     @Test
     void testSetStatusToCancelled() {
-        Order order = new Order("13652556-012a-4c07-b546-54eb1396d79b",
+        Order order = new Order(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"),
                 this.products, 1708560000L, "Safira Sudrajat", "SUCCESS");
         order.setStatus("CANCELLED");
 
@@ -79,7 +79,7 @@ public class OrderTest {
 
     @Test
     void testSetStatusToInvalidStatus() {
-        Order order = new Order("13652556-012a-4c07-b546-54eb1396d79b",
+        Order order = new Order(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"),
                 this.products, 1708560000L, "Safira Sudrajat", "SUCCESS");
 
         assertThrows(IllegalArgumentException.class, () -> {

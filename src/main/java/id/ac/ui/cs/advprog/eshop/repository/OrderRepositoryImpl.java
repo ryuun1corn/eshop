@@ -9,9 +9,39 @@ import java.util.UUID;
 public class OrderRepositoryImpl {
     private List<Order> orderData = new ArrayList<>();
 
-    public Order save(Order order) { return null; }
+    public Order save(Order order) {
+        int i = 0;
+        for (Order savedOrder : orderData) {
+            if (savedOrder.getId().equals(order.getId())) {
+                orderData.set(i, order);
+                return order;
+            }
+            i++;
+        }
 
-    public Order findById(UUID orderId) { return null; }
+        orderData.add(order);
+        return order;
+    }
 
-    public List<Order> findAllByAuthor(String author) { return null; }
+    public Order findById(UUID orderId) {
+        for (Order savedOrder : orderData) {
+            if (savedOrder.getId().equals(orderId)) {
+                return savedOrder;
+            }
+        }
+
+        return null;
+    }
+
+    public List<Order> findAllByAuthor(String author) {
+        List<Order> result = new ArrayList<>();
+
+        for (Order savedOrder : orderData) {
+            if (savedOrder.getAuthor().equals(author)) {
+                result.add(savedOrder);
+            }
+        }
+
+        return result;
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -15,6 +16,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order create(Order order) {
+        if (orderRepository.findById(order.getId()) == null) {
+            return orderRepository.save(order);
+        }
+
         return null;
     }
 
@@ -30,16 +35,22 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order updateStatus(UUID orderId, String status) {
-        return null;
+        Order order = orderRepository.findById(orderId);
+        if (order != null) {
+            order.setStatus(status);
+            return orderRepository.save(order);
+        }
+
+        throw new NoSuchElementException("Order not found");
     }
 
     @Override
     public List<Order> findAll(String author) {
-        return List.of();
+        return orderRepository.findAllByAuthor(author);
     }
 
     @Override
     public Order findOne(UUID orderId) {
-        return null;
+        return orderRepository.findById(orderId);
     }
 }

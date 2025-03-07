@@ -53,11 +53,12 @@ public class PaymentTest {
     @Test
     void testCreatePaymentValidVoucherCode() {
         Map<String, String> paymentData = Map.of("voucherCode", "ESHOP1234ABC5678");
-        Payment payment = new Payment(UUID.randomUUID(),
+        UUID id = UUID.randomUUID();
+        Payment payment = new Payment(id,
                 "VOUCHER", paymentData, this.orders.getFirst());
 
+        assertEquals(id, payment.getId());
         assertEquals("ESHOP1234ABC5678", payment.getPaymentData().get("voucherCode"));
-        assertEquals(payment.getId(), payment.getOrder().getId());
         assertEquals("SUCCESS", payment.getStatus());
         assertEquals("VOUCHER", payment.getMethod());
         assertEquals(this.orders.getFirst(), payment.getOrder());
@@ -101,12 +102,13 @@ public class PaymentTest {
     @Test
     void testCreatePaymentValidBankTransfer() {
         Map<String, String> paymentData = Map.of("bankName", "BCA", "referenceCode", "1234567890");
-        Payment payment = new Payment(UUID.randomUUID(),
+        UUID id = UUID.randomUUID();
+        Payment payment = new Payment(id,
                 "BANK_TRANSFER", paymentData, this.orders.getFirst());
 
         assertEquals("BCA", payment.getPaymentData().get("bankName"));
         assertEquals("1234567890", payment.getPaymentData().get("referenceCode"));
-        assertEquals(payment.getId(), payment.getOrder().getId());
+        assertEquals(id, payment.getId());
         assertEquals("SUCCESS", payment.getStatus());
         assertEquals("BANK_TRANSFER", payment.getMethod());
         assertEquals(this.orders.getFirst(), payment.getOrder());

@@ -43,10 +43,8 @@ public class Payment {
         if (voucherCode != null && voucherCode.length() == 16 &&
                 CountVoucherCodeDigits(voucherCode) == 8 && voucherCode.startsWith("ESHOP")) {
             this.setStatus("SUCCESS");
-            this.order.setStatus(OrderStatus.SUCCESS.getValue());
         } else {
             this.setStatus("REJECTED");
-            this.order.setStatus(OrderStatus.FAILED.getValue());
         }
     }
 
@@ -60,10 +58,8 @@ public class Payment {
 
         if (bankName == null || bankName.isEmpty() || referenceCode == null || referenceCode.isEmpty()) {
             this.setStatus("REJECTED");
-            this.order.setStatus(OrderStatus.FAILED.getValue());
         } else {
             this.setStatus("SUCCESS");
-            this.order.setStatus(OrderStatus.SUCCESS.getValue());
         }
     }
 
@@ -80,10 +76,8 @@ public class Payment {
     public void setStatus(String status) {
         if (status.equals("SUCCESS")) {
             this.status = status;
-            this.order.setStatus(OrderStatus.SUCCESS.getValue());
         } else if (status.equals("REJECTED")) {
             this.status = status;
-            this.order.setStatus(OrderStatus.FAILED.getValue());
         } else {
             throw new IllegalArgumentException("Invalid payment status");
         }

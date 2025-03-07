@@ -151,7 +151,6 @@ public class PaymentTest {
         payment.setStatus("REJECTED");
 
         assertEquals("REJECTED", payment.getStatus());
-        assertEquals("FAILED", payment.getOrder().getStatus());
     }
 
     @Test
@@ -161,7 +160,6 @@ public class PaymentTest {
         payment.setStatus("SUCCESS");
 
         assertEquals("SUCCESS", payment.getStatus());
-        assertEquals("SUCCESS", payment.getOrder().getStatus());
     }
 
     @Test

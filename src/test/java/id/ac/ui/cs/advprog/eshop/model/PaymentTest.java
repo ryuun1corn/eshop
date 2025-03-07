@@ -37,6 +37,9 @@ public class PaymentTest {
                 1708560000L, "Safira Sudrajat");
         Order order2 = new Order(UUID.fromString("a2c62328-4a37-4664-83c7-f32db8620155"), products2,
                 1708570000L, "Bambang Sudrajat");
+
+        orders.add(order1);
+        orders.add(order2);
     }
 
     @Test

@@ -1,8 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
-import lombok.Builder;
+import enums.OrderStatus;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Map;
 import java.util.UUID;
@@ -13,15 +12,80 @@ public class Payment {
     // more robust than using a string
     UUID id;
     String method;
-    @Setter
     String status;
     Map<String, String> paymentData;
     Order order;
 
     public Payment(UUID id, String method, Map<String, String> paymentData, Order order) {
         this.id = id;
-        this.method = method;
-        this.paymentData = paymentData;
-        this.order = order;
+
+        if (method.equals("VOUCHER")) {
+            this.method = method;
+            this.paymentData = paymentData;
+            this.order = order;
+            ValidateVoucherMethod();
+        } else if (method.equals("BANK_TRANSFER")) {
+            this.method = method;
+            this.paymentData = paymentData;
+            this.order = order;
+            validateBankTransferMethod();
+        } else {
+            throw new IllegalArgumentException("Invalid payment method");
+        }
+    }
+
+    private void ValidateVoucherMethod() {
+        if (this.paymentData == null) {
+            throw new IllegalArgumentException("Voucher payment must have voucher code");
+        }
+
+        String voucherCode = this.paymentData.get("voucherCode");
+        if (voucherCode != null && voucherCode.length() == 16 &&
+                CountVoucherCodeDigits(voucherCode) == 8 && voucherCode.startsWith("ESHOP")) {
+            this.setStatus("SUCCESS");
+            this.order.setStatus(OrderStatus.SUCCESS.getValue());
+        } else {
+            this.setStatus("REJECTED");
+            this.order.setStatus(OrderStatus.FAILED.getValue());
+        }
+    }
+
+    private void validateBankTransferMethod() {
+        if (this.paymentData == null) {
+            throw new IllegalArgumentException("Bank transfer payment must have bank name and reference code");
+        }
+
+        String bankName = this.paymentData.get("bankName");
+        String referenceCode = this.paymentData.get("referenceCode");
+
+        if (bankName == null || bankName.isEmpty() || referenceCode == null || referenceCode.isEmpty()) {
+            this.setStatus("REJECTED");
+            this.order.setStatus(OrderStatus.FAILED.getValue());
+        } else {
+            this.setStatus("SUCCESS");
+            this.order.setStatus(OrderStatus.SUCCESS.getValue());
+        }
+    }
+
+    private int CountVoucherCodeDigits(String voucherCode) {
+        int count = 0;
+        for (int i = 0; i < voucherCode.length(); i++) {
+            if (Character.isDigit(voucherCode.charAt(i))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public void setStatus(String status) {
+        if (status.equals("SUCCESS")) {
+            this.status = status;
+            this.order.setStatus(OrderStatus.SUCCESS.getValue());
+        } else if (status.equals("REJECTED")) {
+            this.status = status;
+            this.order.setStatus(OrderStatus.FAILED.getValue());
+        } else {
+            throw new IllegalArgumentException("Invalid payment status");
+        }
     }
 }

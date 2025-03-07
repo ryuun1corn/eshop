@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -97,7 +98,7 @@ public class OrderServiceTest {
         Order order = orders.get(1);
         doReturn(null).when(orderRepository).findById(order.getId());
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(NoSuchElementException.class, () -> {
             orderService.updateStatus(order.getId(), OrderStatus.SUCCESS.getValue());
         });
 

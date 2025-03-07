@@ -93,11 +93,23 @@ public class OrderServiceTest {
     }
 
     @Test
+    void testUpdateStatusInvalidOrderId() {
+        Order order = orders.get(1);
+        doReturn(null).when(orderRepository).findById(order.getId());
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            orderService.updateStatus(order.getId(), OrderStatus.SUCCESS.getValue());
+        });
+
+        verify(orderRepository, times(0)).save(any(Order.class));
+    }
+
+    @Test
     void testFindByIdIfIdFound() {
         Order order = orders.get(1);
         doReturn(order).when(orderRepository).findById(order.getId());
 
-        Order result = orderService.findById(order.getId());
+        Order result = orderService.findOne(order.getId());
         assertEquals(order.getId(), result.getId());
         assertEquals(order.getOrderTime(), result.getOrderTime());
         assertEquals(order.getAuthor(), result.getAuthor());
@@ -109,7 +121,7 @@ public class OrderServiceTest {
         Order order = orders.get(1);
         doReturn(null).when(orderRepository).findById(order.getId());
 
-        assertNull(orderService.findById(order.getId()));
+        assertNull(orderService.findOne(order.getId()));
     }
 
     @Test

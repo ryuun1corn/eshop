@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.eshop.service.operations;
+package operations;
 
 public interface Creatable<T> {
     T create(T model);

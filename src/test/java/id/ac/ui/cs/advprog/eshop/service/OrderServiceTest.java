@@ -60,7 +60,7 @@ public class OrderServiceTest {
     @Test
     void testCreateOrderIfAlreadyExists() {
         Order order = orders.get(1);
-        doReturn(order).when(orderRepository).findById(order.getId());
+        doReturn(order).when(orderRepository).findOne(order.getId());
 
         assertNull(orderService.create(order));
         verify(orderRepository, times(0)).save(order);
@@ -71,7 +71,7 @@ public class OrderServiceTest {
         Order order = orders.get(1);
         Order newOrder = new Order(order.getId(), order.getProducts(), order.getOrderTime(), order.getAuthor(),
                 OrderStatus.SUCCESS.getValue());
-        doReturn(order).when(orderRepository).findById(order.getId());
+        doReturn(order).when(orderRepository).findOne(order.getId());
         doReturn(newOrder).when(orderRepository).save(any(Order.class));
 
         Order result = orderService.updateStatus(order.getId(), OrderStatus.SUCCESS.getValue());
@@ -84,7 +84,7 @@ public class OrderServiceTest {
     @Test
     void testUpdateStatusInvalidStatus() {
         Order order = orders.get(1);
-        doReturn(order).when(orderRepository).findById(order.getId());
+        doReturn(order).when(orderRepository).findOne(order.getId());
 
         assertThrows(IllegalArgumentException.class, () -> {
             orderService.updateStatus(order.getId(), "INVALID_STATUS");
@@ -96,7 +96,7 @@ public class OrderServiceTest {
     @Test
     void testUpdateStatusInvalidOrderId() {
         Order order = orders.get(1);
-        doReturn(null).when(orderRepository).findById(order.getId());
+        doReturn(null).when(orderRepository).findOne(order.getId());
 
         assertThrows(NoSuchElementException.class, () -> {
             orderService.updateStatus(order.getId(), OrderStatus.SUCCESS.getValue());
@@ -108,7 +108,7 @@ public class OrderServiceTest {
     @Test
     void testFindByIdIfIdFound() {
         Order order = orders.get(1);
-        doReturn(order).when(orderRepository).findById(order.getId());
+        doReturn(order).when(orderRepository).findOne(order.getId());
 
         Order result = orderService.findOne(order.getId());
         assertEquals(order.getId(), result.getId());
@@ -120,7 +120,7 @@ public class OrderServiceTest {
     @Test
     void testFindByIdIfIdNotFound() {
         Order order = orders.get(1);
-        doReturn(null).when(orderRepository).findById(order.getId());
+        doReturn(null).when(orderRepository).findOne(order.getId());
 
         assertNull(orderService.findOne(order.getId()));
     }
@@ -128,7 +128,7 @@ public class OrderServiceTest {
     @Test
     void testFindAllByAuthorIfAuthorCorrect() {
         Order order = orders.get(1);
-        doReturn(orders).when(orderRepository).findAllByAuthor(order.getAuthor());
+        doReturn(orders).when(orderRepository).findAll(order.getAuthor());
 
         List<Order> result = orderService.findAll(order.getAuthor());
         for (Order resultOrder : result) {
@@ -142,7 +142,7 @@ public class OrderServiceTest {
     void testFindAllByAuthorIfAllLowercase() {
         Order order = orders.get(1);
         doReturn(new ArrayList<Order>()).when(orderRepository)
-                .findAllByAuthor(order.getAuthor().toLowerCase());
+                .findAll(order.getAuthor().toLowerCase());
 
         List<Order> result = orderService.
                 findAll(order.getAuthor().toLowerCase());

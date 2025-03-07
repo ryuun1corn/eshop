@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.eshop.service.operations;
+package operations;
 
 import java.util.List;
 import java.util.UUID;

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class OrderRepositoryImpl {
+public class OrderRepositoryImpl implements OrderRepository {
     private List<Order> orderData = new ArrayList<>();
 
     public Order save(Order order) {
@@ -25,7 +25,8 @@ public class OrderRepositoryImpl {
         return order;
     }
 
-    public Order findById(UUID orderId) {
+
+    public Order findOne(UUID orderId) {
         for (Order savedOrder : orderData) {
             if (savedOrder.getId().equals(orderId)) {
                 return savedOrder;
@@ -35,7 +36,12 @@ public class OrderRepositoryImpl {
         return null;
     }
 
-    public List<Order> findAllByAuthor(String author) {
+    @Override
+    public List<Order> findAll() {
+        return List.of();
+    }
+
+    public List<Order> findAll(String author) {
         List<Order> result = new ArrayList<>();
 
         for (Order savedOrder : orderData) {

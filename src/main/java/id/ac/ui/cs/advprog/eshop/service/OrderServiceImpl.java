@@ -1,7 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.service;
 
 import id.ac.ui.cs.advprog.eshop.model.Order;
-import id.ac.ui.cs.advprog.eshop.repository.OrderRepositoryImpl;
+import id.ac.ui.cs.advprog.eshop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +12,11 @@ import java.util.UUID;
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
-    private OrderRepositoryImpl orderRepository;
+    private OrderRepository orderRepository;
 
     @Override
     public Order create(Order order) {
-        if (orderRepository.findById(order.getId()) == null) {
+        if (orderRepository.findOne(order.getId()) == null) {
             return orderRepository.save(order);
         }
 
@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order updateStatus(UUID orderId, String status) {
-        Order order = orderRepository.findById(orderId);
+        Order order = orderRepository.findOne(orderId);
         if (order != null) {
             order.setStatus(status);
             return orderRepository.save(order);
@@ -46,12 +46,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAll(String author) {
-        return orderRepository.findAllByAuthor(author);
+        return orderRepository.findAll(author);
     }
 
     @Override
     public Order findOne(UUID orderId) {
-        return orderRepository.findById(orderId);
+        return orderRepository.findOne(orderId);
     }
 
     @Override

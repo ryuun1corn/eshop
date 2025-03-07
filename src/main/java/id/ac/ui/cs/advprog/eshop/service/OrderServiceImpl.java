@@ -53,4 +53,9 @@ public class OrderServiceImpl implements OrderService {
     public Order findOne(UUID orderId) {
         return orderRepository.findById(orderId);
     }
+
+    @Override
+    public boolean delete(UUID modelId) {
+        return false;
+    }
 }

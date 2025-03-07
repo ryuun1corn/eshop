@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import enums.OrderStatus;
 import enums.PaymentMethod;
 import enums.PaymentStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,6 +65,7 @@ public class PaymentTest {
         assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
         assertEquals(PaymentMethod.VOUCHER.getValue(), payment.getMethod());
         assertEquals(this.orders.getFirst(), payment.getOrder());
+        assertEquals(OrderStatus.SUCCESS.getValue(), payment.getOrder().getStatus());
     }
 
     @Test
@@ -81,6 +83,7 @@ public class PaymentTest {
                 PaymentMethod.VOUCHER.getValue(), paymentData, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), payment.getOrder().getStatus());
     }
 
     @Test
@@ -90,6 +93,7 @@ public class PaymentTest {
                 PaymentMethod.VOUCHER.getValue(), paymentData, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), payment.getOrder().getStatus());
     }
 
     @Test
@@ -99,6 +103,7 @@ public class PaymentTest {
                 PaymentMethod.VOUCHER.getValue(), paymentData, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), payment.getOrder().getStatus());
     }
 
     @Test
@@ -114,6 +119,7 @@ public class PaymentTest {
         assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
         assertEquals(PaymentMethod.BANK_TRANSFER.getValue(), payment.getMethod());
         assertEquals(this.orders.getFirst(), payment.getOrder());
+        assertEquals(OrderStatus.SUCCESS.getValue(), payment.getOrder().getStatus());
     }
 
     @Test
@@ -123,12 +129,14 @@ public class PaymentTest {
                 PaymentMethod.BANK_TRANSFER.getValue(), paymentData1, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment1.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), payment1.getOrder().getStatus());
 
         Map<String, String> paymentData2 = Map.of("bankName", "", "referenceCode", "1234567890");
         Payment payment2 = new Payment(UUID.randomUUID(),
                 PaymentMethod.BANK_TRANSFER.getValue(), paymentData2, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment2.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), payment2.getOrder().getStatus());
     }
 
     @Test
@@ -138,12 +146,14 @@ public class PaymentTest {
                 PaymentMethod.BANK_TRANSFER.getValue(), paymentData1, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment1.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), payment1.getOrder().getStatus());
 
         Map<String, String> paymentData2 = Map.of("bankName", "BCA", "referenceCode", "");
         Payment payment2 = new Payment(UUID.randomUUID(),
                 PaymentMethod.BANK_TRANSFER.getValue(), paymentData2, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment2.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), payment2.getOrder().getStatus());
     }
 
     @Test
@@ -153,6 +163,7 @@ public class PaymentTest {
         payment.setStatus(PaymentStatus.REJECTED.getValue());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), payment.getOrder().getStatus());
     }
 
     @Test
@@ -162,6 +173,7 @@ public class PaymentTest {
         payment.setStatus(PaymentStatus.SUCCESS.getValue());
 
         assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
+        assertEquals(OrderStatus.SUCCESS.getValue(), payment.getOrder().getStatus());
     }
 
     @Test
@@ -174,5 +186,6 @@ public class PaymentTest {
         });
 
         assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
+        assertEquals(OrderStatus.SUCCESS.getValue(), payment.getOrder().getStatus());
     }
 }

@@ -78,8 +78,10 @@ public class Payment {
     public void setStatus(String status) {
         if (status.equals("SUCCESS")) {
             this.status = status;
+            this.order.setStatus(OrderStatus.SUCCESS.getValue());
         } else if (status.equals("REJECTED")) {
             this.status = status;
+            this.order.setStatus(OrderStatus.FAILED.getValue());
         } else {
             throw new IllegalArgumentException("Invalid payment status");
         }

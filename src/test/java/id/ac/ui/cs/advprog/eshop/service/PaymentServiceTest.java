@@ -54,7 +54,7 @@ public class PaymentServiceTest {
 
         Payment payment1 = new Payment(UUID.fromString("ced6d240-e9a7-4b5a-aae8-95be125c177c"),
                 PaymentMethod.BANK_TRANSFER.getValue(),
-                Map.of("bankName", "BCA", "referenceCode", "1234567890"), orders.get(0));
+                Map.of("bankName", "BCA", "referenceCode", ""), orders.get(0));
         Payment payment2 = new Payment(UUID.fromString("f3b3b3b3-1b3b-4b3b-8b3b-3b3b3b3b3b3b"),
                 PaymentMethod.VOUCHER.getValue(),
                 Map.of("voucherCode", "ESHOP1234ABC5678"), orders.get(1));
@@ -97,30 +97,22 @@ public class PaymentServiceTest {
 
     @Test
     void testSetStatusSuccess() {
-        Payment payment = payments.get(1);
-        Payment newPayment = new Payment(payment.getId(), payment.getMethod(), payment.getPaymentData(), payment.getOrder(), "SUCCESS");
+        Payment payment = payments.getFirst();
         doReturn(payment).when(paymentRepository).findOne(payment.getId());
-        doReturn(newPayment).when(paymentRepository).save(any(Payment.class));
 
         Payment result = paymentService.setStatus(payment, PaymentStatus.SUCCESS.getValue());
-
-        assertEquals(payment.getId(), result.getId());
+        verify(paymentRepository, times(1)).save(payment);
         assertEquals(PaymentStatus.SUCCESS.getValue(), result.getStatus());
-        verify(paymentRepository, times(1)).save(any(Payment.class));
     }
 
     @Test
     void testSetStatusRejected() {
         Payment payment = payments.get(1);
-        Payment newPayment = new Payment(payment.getId(), payment.getMethod(), payment.getPaymentData(), payment.getOrder(), "REJECTED");
         doReturn(payment).when(paymentRepository).findOne(payment.getId());
-        doReturn(newPayment).when(paymentRepository).save(any(Payment.class));
 
         Payment result = paymentService.setStatus(payment, PaymentStatus.REJECTED.getValue());
-
-        assertEquals(payment.getId(), result.getId());
+        verify(paymentRepository, times(1)).save(payment);
         assertEquals(PaymentStatus.REJECTED.getValue(), result.getStatus());
-        verify(paymentRepository, times(1)).save(any(Payment.class));
     }
 
     @Test

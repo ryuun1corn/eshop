@@ -5,7 +5,6 @@ import enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 import id.ac.ui.cs.advprog.eshop.model.Product;
-import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,13 +24,12 @@ public class PaymentServiceTest {
     PaymentServiceImpl paymentService;
 
     @Mock
-    PaymentRepository paymentRepository;
+    PaymentRepositoryImpl paymentRepository;
 
     List<Payment> payments;
 
     @BeforeEach
     void setUp() {
-        paymentRepository = new PaymentRepositoryImpl();
         payments = new ArrayList<>();
         List<Order> orders = new ArrayList<>();
         List<Product> products = new ArrayList<>();
@@ -144,12 +142,7 @@ public class PaymentServiceTest {
         Payment payment = payments.get(1);
         doReturn(payment).when(paymentRepository).findOne(payment.getId());
 
-        Payment result = paymentService.getPayment(payment.getId());
-        assertEquals(payment.getId(), result.getId());
-        assertEquals(payment.getMethod(), result.getMethod());
-        assertEquals(payment.getStatus(), result.getStatus());
-        assertEquals(payment.getPaymentData(), result.getPaymentData());
-        assertEquals(payment.getOrder(), result.getOrder());
+        assertEquals(payment, paymentService.getPayment(payment.getId()));
     }
 
     @Test

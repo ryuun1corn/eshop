@@ -49,7 +49,7 @@ public class PaymentRepositoryTest {
         Payment payment2 = new Payment(UUID.fromString("f3b3b3b3-1b3b-4b3b-8b3b-3b3b3b3b3b3b"),
                 PaymentMethod.VOUCHER.getValue(),
                 Map.of("voucherCode", "ESHOP1234ABC5678"), orders.get(1));
-        Payment payment3 = new Payment(UUID.fromString("f3b3b3b3-1b3b-4b3b-8b3b-3b3b3b3b3b3b"),
+        Payment payment3 = new Payment(UUID.fromString("b9fb4165-2925-47ca-8f33-e586d3e92c09"),
                 PaymentMethod.VOUCHER.getValue(),
                 Map.of("voucherCode", "ESHOP1234ABC8765"), orders.get(2));
 
@@ -73,6 +73,21 @@ public class PaymentRepositoryTest {
     }
 
     @Test
+    void testSaveCreateOrderExists() {
+        Payment payment = payments.get(1);
+        paymentRepository.save(payment);
+        Payment newPayment = new Payment(UUID.fromString("74c25e5e-7fab-42e4-9d57-86c72ada1913"),
+                PaymentMethod.BANK_TRANSFER.getValue(),
+                Map.of("bankName", "BCA", "referenceCode", "1234567890"), payments.get(1).getOrder());
+        Payment result = paymentRepository.save(newPayment);
+
+        Payment findResult = paymentRepository.findOne(newPayment.getId());
+        assertNull(result);
+        assertNull(findResult);
+        assertEquals(1, paymentRepository.findAll().size());
+    }
+
+    @Test
     void testSaveUpdate() {
         Payment payment = payments.get(1);
         paymentRepository.save(payment);
@@ -81,13 +96,12 @@ public class PaymentRepositoryTest {
         Payment result = paymentRepository.save(newPayment);
 
         Payment findResult = paymentRepository.findOne(payments.get(1).getId());
-        assertEquals(payment.getId(), result.getId());
-        assertEquals(payment.getId(), findResult.getId());
-        assertEquals(PaymentMethod.BANK_TRANSFER.getValue(), findResult.getMethod());
-        assertEquals(PaymentStatus.SUCCESS.getValue(), findResult.getStatus());
-        assertEquals(payment.getPaymentData(), findResult.getPaymentData());
-        assertEquals(payment.getOrder(), findResult.getOrder());
-        assertEquals(1, paymentRepository.findAll().size());
+        assertEquals(findResult.getId(), result.getId());
+        assertEquals(newPayment.getId(), findResult.getId());
+        assertEquals(newPayment.getMethod(), findResult.getMethod());
+        assertEquals(newPayment.getStatus(), findResult.getStatus());
+        assertEquals(newPayment.getPaymentData(), findResult.getPaymentData());
+        assertEquals(newPayment.getOrder(), findResult.getOrder());
     }
 
     @Test
@@ -129,6 +143,28 @@ public class PaymentRepositoryTest {
         }
 
         Payment findResult = paymentRepository.findOne(UUID.fromString("7f9e15bb-4b15-42f4-aebc-c3af385fb079"));
+        assertNull(findResult);
+    }
+
+    @Test
+    void testFindByOrderIfFound() {
+        for (Payment payment : payments) {
+            paymentRepository.save(payment);
+        }
+
+        Payment findResult = paymentRepository.findOne(payments.get(1).getOrder());
+        assertEquals(payments.get(1).getId(), findResult.getId());
+        assertEquals(payments.get(1).getMethod(), findResult.getMethod());
+        assertEquals(payments.get(1).getStatus(), findResult.getStatus());
+        assertEquals(payments.get(1).getPaymentData(), findResult.getPaymentData());
+        assertEquals(payments.get(1).getOrder(), findResult.getOrder());
+    }
+
+    @Test
+    void testFindByOrderIfNotFound() {
+        paymentRepository.save(payments.getFirst());
+
+        Payment findResult = paymentRepository.findOne(payments.getLast().getOrder());
         assertNull(findResult);
     }
 

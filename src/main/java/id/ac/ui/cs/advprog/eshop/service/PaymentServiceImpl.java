@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.service;
 
+import enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
@@ -16,22 +17,37 @@ public class PaymentServiceImpl implements PaymentService {
     private PaymentRepository paymentRepository;
 
     @Override
-    public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
+    public Payment addPayment(Payment payment) {
+        if (paymentRepository.findOne(payment.getId()) == null &&
+        paymentRepository.findOne(payment.getOrder()) == null) {
+            return paymentRepository.save(payment);
+        }
+
         return null;
     }
 
     @Override
     public Payment setStatus(Payment payment, String status) {
+        if (!PaymentStatus.contains(status)) {
+            throw new IllegalArgumentException("Invalid status");
+        }
+
+        Payment paymentToUpdate = paymentRepository.findOne(payment.getId());
+        if (paymentToUpdate != null) {
+            paymentToUpdate.setStatus(status);
+            return paymentRepository.save(paymentToUpdate);
+        }
+
         return null;
     }
 
     @Override
     public Payment getPayment(UUID paymentId) {
-        return null;
+        return paymentRepository.findOne(paymentId);
     }
 
     @Override
     public List<Payment> getAllPayments() {
-        return List.of();
+        return paymentRepository.findAll();
     }
 }

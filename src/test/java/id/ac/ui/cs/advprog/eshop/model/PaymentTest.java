@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import enums.PaymentMethod;
 import enums.PaymentStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,12 +57,12 @@ public class PaymentTest {
         Map<String, String> paymentData = Map.of("voucherCode", "ESHOP1234ABC5678");
         UUID id = UUID.randomUUID();
         Payment payment = new Payment(id,
-                "VOUCHER", paymentData, this.orders.getFirst());
+                PaymentMethod.VOUCHER.getValue(), paymentData, this.orders.getFirst());
 
         assertEquals(id, payment.getId());
         assertEquals("ESHOP1234ABC5678", payment.getPaymentData().get("voucherCode"));
         assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
-        assertEquals("VOUCHER", payment.getMethod());
+        assertEquals(PaymentMethod.VOUCHER.getValue(), payment.getMethod());
         assertEquals(this.orders.getFirst(), payment.getOrder());
     }
 
@@ -69,7 +70,7 @@ public class PaymentTest {
     void testCreatePaymentNoVoucherCode() {
         assertThrows(IllegalArgumentException.class, () -> {
             Payment payment = new Payment(UUID.randomUUID(),
-                    "VOUCHER", null, this.orders.getFirst());
+                    PaymentMethod.VOUCHER.getValue(), null, this.orders.getFirst());
         });
     }
 
@@ -77,7 +78,7 @@ public class PaymentTest {
     void testCreatePaymentInvalidVoucherCodeLength() {
         Map<String, String> paymentData = Map.of("voucherCode", "ESHOP1234ABC5678XYZ");
         Payment payment = new Payment(UUID.randomUUID(),
-                "VOUCHER", paymentData, this.orders.getFirst());
+                PaymentMethod.VOUCHER.getValue(), paymentData, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
@@ -86,7 +87,7 @@ public class PaymentTest {
     void testCreatePaymentInvalidVoucherCodePrefix() {
         Map<String, String> paymentData = Map.of("voucherCode", "ZSHOP1234ABC5678");
         Payment payment = new Payment(UUID.randomUUID(),
-                "VOUCHER", paymentData, this.orders.getFirst());
+                PaymentMethod.VOUCHER.getValue(), paymentData, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
@@ -95,7 +96,7 @@ public class PaymentTest {
     void testCreatePaymentInvalidVoucherCodeNumericalCharactersAmount() {
         Map<String, String> paymentData = Map.of("voucherCode", "ESHOP1234ABCDEF");
         Payment payment = new Payment(UUID.randomUUID(),
-                "VOUCHER", paymentData, this.orders.getFirst());
+                PaymentMethod.VOUCHER.getValue(), paymentData, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
     }
@@ -105,13 +106,13 @@ public class PaymentTest {
         Map<String, String> paymentData = Map.of("bankName", "BCA", "referenceCode", "1234567890");
         UUID id = UUID.randomUUID();
         Payment payment = new Payment(id,
-                "BANK_TRANSFER", paymentData, this.orders.getFirst());
+                PaymentMethod.BANK_TRANSFER.getValue(), paymentData, this.orders.getFirst());
 
         assertEquals("BCA", payment.getPaymentData().get("bankName"));
         assertEquals("1234567890", payment.getPaymentData().get("referenceCode"));
         assertEquals(id, payment.getId());
         assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
-        assertEquals("BANK_TRANSFER", payment.getMethod());
+        assertEquals(PaymentMethod.BANK_TRANSFER.getValue(), payment.getMethod());
         assertEquals(this.orders.getFirst(), payment.getOrder());
     }
 
@@ -119,13 +120,13 @@ public class PaymentTest {
     void testCreatePaymentNoBankName() {
         Map<String, String> paymentData1 = Map.of("referenceCode", "1234567890");
         Payment payment1 = new Payment(UUID.randomUUID(),
-                "BANK_TRANSFER", paymentData1, this.orders.getFirst());
+                PaymentMethod.BANK_TRANSFER.getValue(), paymentData1, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment1.getStatus());
 
         Map<String, String> paymentData2 = Map.of("bankName", "", "referenceCode", "1234567890");
         Payment payment2 = new Payment(UUID.randomUUID(),
-                "BANK_TRANSFER", paymentData2, this.orders.getFirst());
+                PaymentMethod.BANK_TRANSFER.getValue(), paymentData2, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment2.getStatus());
     }
@@ -134,13 +135,13 @@ public class PaymentTest {
     void testCreatePaymentNoReferenceCode() {
         Map<String, String> paymentData1 = Map.of("bankName", "BCA");
         Payment payment1 = new Payment(UUID.randomUUID(),
-                "BANK_TRANSFER", paymentData1, this.orders.getFirst());
+                PaymentMethod.BANK_TRANSFER.getValue(), paymentData1, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment1.getStatus());
 
         Map<String, String> paymentData2 = Map.of("bankName", "BCA", "referenceCode", "");
         Payment payment2 = new Payment(UUID.randomUUID(),
-                "BANK_TRANSFER", paymentData2, this.orders.getFirst());
+                PaymentMethod.BANK_TRANSFER.getValue(), paymentData2, this.orders.getFirst());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment2.getStatus());
     }
@@ -148,7 +149,7 @@ public class PaymentTest {
     @Test
     void testSetStatusToRejected() {
         Payment payment = new Payment(UUID.randomUUID(),
-                "VOUCHER", Map.of("voucherCode", "ESHOP1234ABC5678"), this.orders.getFirst());
+                PaymentMethod.VOUCHER.getValue(), Map.of("voucherCode", "ESHOP1234ABC5678"), this.orders.getFirst());
         payment.setStatus(PaymentStatus.REJECTED.getValue());
 
         assertEquals(PaymentStatus.REJECTED.getValue(), payment.getStatus());
@@ -157,7 +158,7 @@ public class PaymentTest {
     @Test
     void testSetStatusToSuccess() {
         Payment payment = new Payment(UUID.randomUUID(),
-                "VOUCHER", Map.of("voucherCode", "ESHOP1234ABC56789"), this.orders.getFirst());
+                PaymentMethod.VOUCHER.getValue(), Map.of("voucherCode", "ESHOP1234ABC56789"), this.orders.getFirst());
         payment.setStatus(PaymentStatus.SUCCESS.getValue());
 
         assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
@@ -166,7 +167,7 @@ public class PaymentTest {
     @Test
     void testSetStatusToInvalidStatus() {
         Payment payment = new Payment(UUID.randomUUID(),
-                "VOUCHER", Map.of("voucherCode", "ESHOP1234ABC5678"), this.orders.getFirst());
+                PaymentMethod.VOUCHER.getValue(), Map.of("voucherCode", "ESHOP1234ABC5678"), this.orders.getFirst());
 
         assertThrows(IllegalArgumentException.class, () -> {
             payment.setStatus("MEOW");

@@ -1,6 +1,8 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
 import enums.OrderStatus;
+import enums.PaymentMethod;
+import enums.PaymentStatus;
 import lombok.Getter;
 
 import java.util.Map;
@@ -19,12 +21,12 @@ public class Payment {
     public Payment(UUID id, String method, Map<String, String> paymentData, Order order) {
         this.id = id;
 
-        if (method.equals("VOUCHER")) {
+        if (method.equals(PaymentMethod.VOUCHER.getValue())) {
             this.method = method;
             this.paymentData = paymentData;
             this.order = order;
             ValidateVoucherMethod();
-        } else if (method.equals("BANK_TRANSFER")) {
+        } else if (method.equals(PaymentMethod.BANK_TRANSFER.getValue())) {
             this.method = method;
             this.paymentData = paymentData;
             this.order = order;
@@ -42,9 +44,9 @@ public class Payment {
         String voucherCode = this.paymentData.get("voucherCode");
         if (voucherCode != null && voucherCode.length() == 16 &&
                 CountVoucherCodeDigits(voucherCode) == 8 && voucherCode.startsWith("ESHOP")) {
-            this.setStatus("SUCCESS");
+            this.setStatus(PaymentStatus.SUCCESS.getValue());
         } else {
-            this.setStatus("REJECTED");
+            this.setStatus(PaymentStatus.REJECTED.getValue());
         }
     }
 

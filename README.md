@@ -22,36 +22,26 @@ Yudayana Arif Prasojo (2306215160)
     - 5.1 [Reflection 1: Application of SOLID Principles](#reflection-1-application-of-solid-principles)
     - 5.2 [Reflection 2: Advantages and Disadvantages of Applying SOLID Principles](#reflection-2-advantages-and-disadvantages-of-applying-solid-principles)
     - 5.3 [Reflection 3: Disadvantages of Not Applying SOLID Principles](#reflection-3-disadvantages-of-not-applying-solid-principles)
+6. [Week 04 Reflections](#week-04-reflections)
+    - 6.1 [Reflection 1: TDD Flow](#reflection-1-tdd-flow)
+    - 6.2 [Reflection 2: F.I.R.S.T. Principle](#reflection-2-first-principle)
 
-## Week 03 Reflections
+## Week 04 Reflections
 
-### Reflection 1: Application of SOLID Principles
-> Explain what principles you apply to your project!
+### Reflection 1: TDD Flow
+> Reflect based on Percival (2017) proposed self-reflective questions (in “Principles and Best Practice of Testing” submodule, chapter “Evaluating Your Testing Objectives”), whether this TDD flow is useful enough for you or not. If not, explain things that you need to do next time you make more tests.
 
-Pada proyek ini, saya menerapkan prinsip SOLID untuk memastikan bahwa kode yang saya tulis dapat di-maintain dan di-extend dengan mudah. Prinsip SOLID yang saya terapkan terdiri dari:
-1. **Single Responsibility Principle (SRP)**: Saya memastikan bahwa setiap class hanya memiliki satu tanggung jawab. Sebagai contoh, class `ProductServiceImpl` hanya bertanggung jawab untuk mengatur operasi CRUD terhadap entitas `Product`.
-2. **Open/Closed Principle (OCP)**: Saya memastikan bahwa class yang saya buat dapat di-extend tanpa mengubah fungsionalitas yang sudah ada. Sebagai contoh, interface `BaseModelRepository` diimplementasikan oleh `ProductRepositoryImpl` dan `CarRepositoryImpl` sehingga saya dapat menambahkan entitas baru tanpa mengubah fungsionalitas yang sudah ada.
-3. **Liskov Substitution Principle (LSP)**: Saya memastikan bahwa subclass dapat digunakan sebagai pengganti superclass tanpa mengubah fungsionalitas yang sudah ada. Sebagai contoh, class `Product` dapat digunakan sebagai pengganti class `BaseModel`.
-4. **Interface Segregation Principle (ISP)**: Saya memastikan bahwa interface yang saya buat hanya memiliki method yang diperlukan. Sebagai contoh, interface `BaseModelService` hanya memiliki method yang diperlukan untuk operasi CRUD.
-5. **Dependency Inversion Principle (DIP)**: Saya memastikan bahwa class yang saya buat bergantung pada abstraksi, bukan implementasi. Sebagai contoh, class `ProductServiceImpl` bergantung pada interface `BaseModelRepository` sehingga saya dapat mengganti implementasi repository tanpa mengubah fungsionalitas service.
+Menurut saya, TDD flow yang saya terapkan pada proyek ini cukup berguna karena membantu saya untuk memastikan bahwa kode yang saya tulis berjalan dengan baik. Dengan menggunakan TDD, saya dapat memahami seluruh kemungkinan skenario yang terjadi pada kode yang saya tulis dan memastikan bahwa kode tersebut berjalan sesuai dengan yang diinginkan dan tidak menghasilkan bug.
 
-### Reflection 2: Advantages and Disadvantages of Applying SOLID Principles
-> Explain the advantages of applying SOLID principles to your project with examples.
+### Reflection 2: F.I.R.S.T. Principle
+> You have created unit tests in Tutorial. Now reflect whether your tests have successfully followed F.I.R.S.T. principle or not. If not, explain things that you need to do the next time you create more tests.
 
-Penerapan prinsip SOLID pada proyek ini memberikan beberapa keuntungan, antara lain:
-1. **Maintainability**: Kode yang saya tulis menjadi lebih mudah untuk di-maintain karena setiap class hanya memiliki satu tanggung jawab. Sebagai contoh, jika saya ingin mengubah operasi CRUD pada entitas `Product`, saya hanya perlu mengubah class `ProductServiceImpl` tanpa memengaruhi class lain.
-2. **Extensibility**: Kode yang saya tulis menjadi lebih mudah untuk di-extend karena class yang saya buat dapat di-extend tanpa mengubah fungsionalitas yang sudah ada. Sebagai contoh, jika saya ingin menambahkan entitas baru, saya hanya perlu membuat class baru yang mengimplementasikan interface yang sudah ada.
-3. **Testability**: Kode yang saya tulis menjadi lebih mudah untuk di-test karena class yang saya buat memiliki fungsionalitas yang terpisah. Sebagai contoh, jika saya ingin mengetes operasi CRUD pada entitas `Product`, saya hanya perlu mengetes class `ProductServiceImpl` tanpa perlu mengetes class lain.
-4. **Scalability**: Kode yang saya tulis menjadi lebih mudah untuk di-scale karena class yang saya buat dapat digunakan kembali. Sebagai contoh, jika saya ingin menambahkan operasi CRUD pada entitas lain, saya hanya perlu membuat class baru yang mengimplementasikan interface yang sudah ada.
-
-### Reflection 3: Disadvantages of Not Applying SOLID Principles
-> Explain the disadvantages of not applying SOLID principles to your project with examples.
-
-Tidak menerapkan prinsip SOLID pada proyek ini dapat menyebabkan beberapa masalah, antara lain:
-1. **Maintainability**: Kode yang saya tulis menjadi sulit untuk di-maintain karena setiap class memiliki banyak tanggung jawab. Sebagai contoh, jika saya ingin mengubah operasi CRUD pada entitas `Product`, saya harus mengubah banyak class yang terkait.
-2. **Extensibility**: Kode yang saya tulis menjadi sulit untuk di-extend karena class yang saya buat tidak dapat di-extend tanpa mengubah fungsionalitas yang sudah ada. Sebagai contoh, jika saya ingin menambahkan entitas baru, saya harus mengubah banyak class yang terkait.
-3. **Testability**: Kode yang saya tulis menjadi sulit untuk di-test karena class yang saya buat memiliki fungsionalitas yang tercampur. Sebagai cont
-4. **Scalability**: Kode yang saya tulis menjadi sulit untuk di-scale karena class yang saya buat tidak dapat digunakan kembali. Sebagai contoh, jika saya ingin menambahkan operasi CRUD pada entitas lain, saya harus membuat class baru yang memiliki fungsionalitas yang sama.
+Menurut saya, unit test yang saya buat pada proyek ini sudah mengikuti prinsip F.I.R.S.T. dengan baik:
+1. **Fast**: Unit test yang saya buat berjalan dengan cepat karena menggunakan mock object dan tidak memerlukan koneksi ke database.
+2. **Independent**: Unit test yang saya buat tidak bergantung pada unit test lainnya karena setiap test case mempersiapkan datanya sendiri dan tidak memengaruhi test case lainnya.
+3. **Repeatable**: Unit test yang saya buat dapat diulang kapan saja dan di mana saja karena tidak bergantung pada environment eksternal.
+4. **Self-Validating**: Unit test yang saya buat menggunakan assertion untuk memvalidasi hasil dari test case sehingga dapat mengetahui apakah test case tersebut berhasil atau tidak tanpa harus melihat output atau log secara manual.
+5. **Timely**: Unit test yang saya buat ditulis sebelum kode yang diuji sehingga dapat membantu saya untuk memastikan bahwa kode yang saya tulis berjalan dengan baik.
 
 ## Week 01 Reflections
 
@@ -97,3 +87,33 @@ Isu-isu kualitas kode yang saya perbaiki pada exercise ini beserta strategi yang
 Menurut saya, implementasi CI/CD yang sudah saya terapkan melalui Github Actions dan Koyeb telah memenuhi definisi dari Continuous Integration dan Continuous Deployment. Hal ini dikarenakan project saya sudah menerapkan Continuous Integration, yaitu membuat build secara otomatis dan melakukan testing terhadapnya. Alat-alat yang bertanggung jawab dalam melakukan ini adalah CodeQL, OSSF Scorecard, PMD, dan JaCoCo beserta Unit Test dalam aplikasi.
 
 Project saya juga sudah dilengkapi Continuous Deployment dengan melakukan deployment secara otomatis ketika terjadi push terhadap branch main. Platform yang saya gunakan untuk CD adalah Koyeb, dilengkapi dengan Dockerfile untuk kebebasan yang lebih leluasa dalam memilih environment deployment yang digunakan. 
+
+## Week 03 Reflections
+
+### Reflection 1: Application of SOLID Principles
+> Explain what principles you apply to your project!
+
+Pada proyek ini, saya menerapkan prinsip SOLID untuk memastikan bahwa kode yang saya tulis dapat di-maintain dan di-extend dengan mudah. Prinsip SOLID yang saya terapkan terdiri dari:
+1. **Single Responsibility Principle (SRP)**: Saya memastikan bahwa setiap class hanya memiliki satu tanggung jawab. Sebagai contoh, class `ProductServiceImpl` hanya bertanggung jawab untuk mengatur operasi CRUD terhadap entitas `Product`.
+2. **Open/Closed Principle (OCP)**: Saya memastikan bahwa class yang saya buat dapat di-extend tanpa mengubah fungsionalitas yang sudah ada. Sebagai contoh, interface `BaseModelRepository` diimplementasikan oleh `ProductRepositoryImpl` dan `CarRepositoryImpl` sehingga saya dapat menambahkan entitas baru tanpa mengubah fungsionalitas yang sudah ada.
+3. **Liskov Substitution Principle (LSP)**: Saya memastikan bahwa subclass dapat digunakan sebagai pengganti superclass tanpa mengubah fungsionalitas yang sudah ada. Sebagai contoh, class `Product` dapat digunakan sebagai pengganti class `BaseModel`.
+4. **Interface Segregation Principle (ISP)**: Saya memastikan bahwa interface yang saya buat hanya memiliki method yang diperlukan. Sebagai contoh, interface `BaseModelService` hanya memiliki method yang diperlukan untuk operasi CRUD.
+5. **Dependency Inversion Principle (DIP)**: Saya memastikan bahwa class yang saya buat bergantung pada abstraksi, bukan implementasi. Sebagai contoh, class `ProductServiceImpl` bergantung pada interface `BaseModelRepository` sehingga saya dapat mengganti implementasi repository tanpa mengubah fungsionalitas service.
+
+### Reflection 2: Advantages and Disadvantages of Applying SOLID Principles
+> Explain the advantages of applying SOLID principles to your project with examples.
+
+Penerapan prinsip SOLID pada proyek ini memberikan beberapa keuntungan, antara lain:
+1. **Maintainability**: Kode yang saya tulis menjadi lebih mudah untuk di-maintain karena setiap class hanya memiliki satu tanggung jawab. Sebagai contoh, jika saya ingin mengubah operasi CRUD pada entitas `Product`, saya hanya perlu mengubah class `ProductServiceImpl` tanpa memengaruhi class lain.
+2. **Extensibility**: Kode yang saya tulis menjadi lebih mudah untuk di-extend karena class yang saya buat dapat di-extend tanpa mengubah fungsionalitas yang sudah ada. Sebagai contoh, jika saya ingin menambahkan entitas baru, saya hanya perlu membuat class baru yang mengimplementasikan interface yang sudah ada.
+3. **Testability**: Kode yang saya tulis menjadi lebih mudah untuk di-test karena class yang saya buat memiliki fungsionalitas yang terpisah. Sebagai contoh, jika saya ingin mengetes operasi CRUD pada entitas `Product`, saya hanya perlu mengetes class `ProductServiceImpl` tanpa perlu mengetes class lain.
+4. **Scalability**: Kode yang saya tulis menjadi lebih mudah untuk di-scale karena class yang saya buat dapat digunakan kembali. Sebagai contoh, jika saya ingin menambahkan operasi CRUD pada entitas lain, saya hanya perlu membuat class baru yang mengimplementasikan interface yang sudah ada.
+
+### Reflection 3: Disadvantages of Not Applying SOLID Principles
+> Explain the disadvantages of not applying SOLID principles to your project with examples.
+
+Tidak menerapkan prinsip SOLID pada proyek ini dapat menyebabkan beberapa masalah, antara lain:
+1. **Maintainability**: Kode yang saya tulis menjadi sulit untuk di-maintain karena setiap class memiliki banyak tanggung jawab. Sebagai contoh, jika saya ingin mengubah operasi CRUD pada entitas `Product`, saya harus mengubah banyak class yang terkait.
+2. **Extensibility**: Kode yang saya tulis menjadi sulit untuk di-extend karena class yang saya buat tidak dapat di-extend tanpa mengubah fungsionalitas yang sudah ada. Sebagai contoh, jika saya ingin menambahkan entitas baru, saya harus mengubah banyak class yang terkait.
+3. **Testability**: Kode yang saya tulis menjadi sulit untuk di-test karena class yang saya buat memiliki fungsionalitas yang tercampur. Sebagai cont
+4. **Scalability**: Kode yang saya tulis menjadi sulit untuk di-scale karena class yang saya buat tidak dapat digunakan kembali. Sebagai contoh, jika saya ingin menambahkan operasi CRUD pada entitas lain, saya harus membuat class baru yang memiliki fungsionalitas yang sama.

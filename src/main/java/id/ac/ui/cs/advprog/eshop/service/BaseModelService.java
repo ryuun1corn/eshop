@@ -1,12 +1,8 @@
 package id.ac.ui.cs.advprog.eshop.service;
 
-import java.util.List;
-import java.util.UUID;
+import operations.Creatable;
+import operations.Deletable;
+import operations.Editable;
+import operations.Findable;
 
-public interface BaseModelService<T> {
-    T create(T model);
-    T edit(UUID modelId, T model);
-    boolean delete(UUID modelId);
-    List<T> findAll();
-    T findOne(UUID modelId);
-}
+public interface BaseModelService<T> extends Creatable<T>, Editable<T>, Deletable, Findable<T> {}
